@@ -1,0 +1,111 @@
+.home-instagram {
+    padding-block: clamp(4rem, 7vw, 6rem);
+    background-color: #dfe8ea;
+  }
+  
+  .home-instagram__inner {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 3.5vw, 2.75rem);
+  }
+  
+  .home-instagram__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    text-align: center;
+  }
+  
+  .home-instagram__title,
+  .home-instagram__script {
+  font-family: var(--ff-script);
+  font-style: italic;
+  }
+
+  .home-instagram__title {
+    order: 0;
+    margin: 0;
+    font-family: var(--ff-script);
+    font-size: clamp(1.45rem, 1.8vw, 2.05rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    color: color-mix(in srgb, var(--c-secondary) 78%, white);
+  }
+  
+  .home-instagram__script {
+    order: 1;
+    margin: 0;
+    font-size: clamp(2.8rem, 4.4vw, 5rem);
+    font-weight: 400;
+    line-height: 0.9;
+    color: color-mix(in srgb, var(--c-secondary) 52%, white);
+    opacity: 0.92;
+  }
+  
+  .home-instagram__grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(var(--instagram-columns, 1), minmax(0, 1fr));
+    gap: 0.35rem;
+    align-items: stretch;
+  }
+
+  .home-instagram__item {
+    min-inline-size: 0;
+  }
+  
+  .home-instagram__card {
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 4 / 5;
+    background-color: color-mix(in srgb, var(--c-surface) 45%, transparent);
+    overflow: hidden;
+  }
+  
+  .home-instagram__image {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-base), opacity var(--transition-base);
+  }
+  
+  a.home-instagram__card:hover .home-instagram__image,
+  a.home-instagram__card:focus-visible .home-instagram__image {
+    transform: scale(1.025);
+  }
+  
+  .home-instagram__profile-wrap {
+    display: none;
+  }
+  
+  @media (max-width: 64rem) {
+    .home-instagram__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  
+  @media (max-width: 40rem) {
+    .home-instagram {
+      padding-block: clamp(3rem, 8vw, 4rem);
+    }
+  
+    .home-instagram__inner {
+      gap: 1.5rem;
+    }
+  
+    .home-instagram__title {
+      font-size: clamp(1.25rem, 5vw, 1.6rem);
+    }
+  
+    .home-instagram__script {
+      font-size: clamp(2.2rem, 10vw, 3.2rem);
+    }
+  
+    .home-instagram__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
