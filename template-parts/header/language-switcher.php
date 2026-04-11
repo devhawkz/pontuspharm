@@ -3,6 +3,8 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
+$context = isset($args['context']) && $args['context'] === 'mobile' ? 'mobile' : 'desktop';
+
 if (!function_exists('pll_the_languages')) {
 	return;
 }
@@ -13,72 +15,101 @@ $languages = pll_the_languages([
 	'hide_current'  => 0,
 ]);
 
-if (empty($languages) || !is_array($languages)) {
+if (empty($languages) || !is_array($languages) || count($languages) < 2) {
 	return;
 }
 
 $current_language = null;
-$other_languages  = [];
 
 foreach ($languages as $language) {
 	if (!empty($language['current_lang'])) {
 		$current_language = $language;
-	} else {
-		$other_languages[] = $language;
+		break;
 	}
 }
 
 if (!$current_language) {
-	return;
+	$current_language = reset($languages);
 }
 
-$current_slug = !empty($current_language['slug']) ? strtoupper($current_language['slug']) : '';
-?>
+$current_label = !empty($current_language['slug'])
+	? strtoupper((string) $current_language['slug'])
+	: strtoupper((string) ($current_language['locale'] ?? ''));
 
-<div class="site-header__lang-switcher js-lang-switcher">
-	<button
-		class="site-header__lang-toggle js-lang-toggle"
-		type="button"
-		aria-expanded="false"
-		aria-haspopup="true"
-		aria-controls="site-header-lang-dropdown"
-		aria-label="<?php esc_attr_e('Language switcher', 'pontus-zenergija'); ?>"
-	>
-		<span class="site-header__lang-icon" aria-hidden="true">
-			<svg class="site-header__lang-icon-svg" viewBox="0 0 24 24" focusable="false">
-				<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
-				<path d="M3 12h18" fill="none" stroke="currentColor" stroke-width="1.8"></path>
-				<path d="M12 3a14 14 0 0 1 0 18" fill="none" stroke="currentColor" stroke-width="1.8"></path>
-				<path d="M12 3a14 14 0 0 0 0 18" fill="none" stroke="currentColor" stroke-width="1.8"></path>
-			</svg>
-		</span>
+if ($context === 'mobile') : ?>
+	<div class="site-mobile-panel__lang-switcher" aria-label="<?php esc_attr_e('Language switcher', 'pontus-zenergija'); ?>">
+		<ul>
+			<?php foreach ($languages as $language) : ?>
+				<?php
+				$is_current = !empty($language['current_lang']);
+				$label      = !empty($language['slug'])
+					? strtoupper((string) $language['slug'])
+					: strtoupper((string) ($language['locale'] ?? ''));
+				?>
+				<li class="<?php echo $is_current ? 'current-lang' : ''; ?>">
+					<a
+						href="<?php echo esc_url((string) $language['url']); ?>"
+						lang="<?php echo esc_attr((string) ($language['locale'] ?? '')); ?>"
+						hreflang="<?php echo esc_attr((string) ($language['slug'] ?? '')); ?>"
+						<?php echo $is_current ? 'aria-current="page"' : ''; ?>
+					>
+						<?php echo esc_html($label); ?>
+					</a>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+<?php else : ?>
+	<div class="site-header__lang-switcher" data-lang-switcher>
+		<button
+			class="site-header__lang-toggle"
+			type="button"
+			aria-expanded="false"
+			aria-haspopup="true"
+			aria-controls="site-header-lang-dropdown"
+		>
+			<span class="site-header__lang-icon" aria-hidden="true">
+				<svg class="site-header__lang-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+					<path d="M3 12H21" stroke="currentColor" stroke-width="1.6"/>
+					<path d="M12 3C14.5 5.6 16 8.7 16 12C16 15.3 14.5 18.4 12 21" stroke="currentColor" stroke-width="1.6"/>
+					<path d="M12 3C9.5 5.6 8 8.7 8 12C8 15.3 9.5 18.4 12 21" stroke="currentColor" stroke-width="1.6"/>
+				</svg>
+			</span>
 
-		<span class="site-header__lang-current">
-			<?php echo esc_html($current_slug); ?>
-		</span>
+			<span class="site-header__lang-current">
+				<?php echo esc_html($current_label); ?>
+			</span>
 
-		<span class="site-header__lang-chevron" aria-hidden="true"></span>
-	</button>
+			<span class="site-header__lang-chevron" aria-hidden="true"></span>
+		</button>
 
-	<?php if (!empty($other_languages)) : ?>
 		<div
-			class="site-header__lang-dropdown js-lang-dropdown"
 			id="site-header-lang-dropdown"
+			class="site-header__lang-dropdown"
 			hidden
 		>
 			<ul class="site-header__lang-list">
-				<?php foreach ($other_languages as $language) : ?>
+				<?php foreach ($languages as $language) : ?>
 					<?php
-					$lang_slug = !empty($language['slug']) ? strtoupper($language['slug']) : '';
-					$lang_url  = !empty($language['url']) ? $language['url'] : '#';
+					$is_current = !empty($language['current_lang']);
+					$label      = !empty($language['slug'])
+						? strtoupper((string) $language['slug'])
+						: strtoupper((string) ($language['locale'] ?? ''));
 					?>
-					<li class="site-header__lang-item">
-						<a class="site-header__lang-link" href="<?php echo esc_url($lang_url); ?>">
-							<?php echo esc_html($lang_slug); ?>
+					<li class="site-header__lang-item<?php echo $is_current ? ' current-lang' : ''; ?>">
+						<a
+							class="site-header__lang-link"
+							href="<?php echo esc_url((string) $language['url']); ?>"
+							lang="<?php echo esc_attr((string) ($language['locale'] ?? '')); ?>"
+							hreflang="<?php echo esc_attr((string) ($language['slug'] ?? '')); ?>"
+							<?php echo $is_current ? 'aria-current="page"' : ''; ?>
+						>
+							<?php echo esc_html($label); ?>
 						</a>
 					</li>
 				<?php endforeach; ?>
 			</ul>
 		</div>
-	<?php endif; ?>
-</div>
+	</div>
+<?php endif; ?>

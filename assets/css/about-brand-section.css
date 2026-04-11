@@ -60,7 +60,7 @@
   
   .home-about-brand__shape--accent {
     inset-inline-start: 68%;
-    inset-block-start: 60%;
+    inset-block-start: 62%;
     inline-size: 16%;
     block-size: 12%;
     border-radius: 50% 45% 55% 45%;
@@ -70,7 +70,7 @@
   
   .home-about-brand__shape--dot {
     inset-inline-start: 84%;
-    inset-block-start: 68%;
+    inset-block-start: 71%;
     inline-size: 6%;
     block-size: 6%;
     border-radius: 50%;
