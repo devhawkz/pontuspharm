@@ -41,6 +41,13 @@ function pontus_enqueue_assets(): void
 		pontus_asset_version('/assets/css/header.css')
 	);
 
+	wp_enqueue_style(
+		'pontus-footer',
+		$theme_uri . '/assets/css/footer.css',
+		['pontus-tokens'],
+		pontus_asset_version('/assets/css/footer.css')
+	);
+
 	wp_enqueue_script(
 		'pontus-header',
 		$theme_uri . '/assets/js/header.js',
