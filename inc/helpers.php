@@ -32,6 +32,38 @@ function pontus_get_footer_settings_page_id(): int
 }
 
 /**
+ * Post ID for ACF fields on the static front page (Polylang-aware).
+ *
+ * @return int 0 when the homepage is the blog index, not a static page.
+ */
+function pontus_get_front_page_acf_post_id(): int
+{
+	if (get_option('show_on_front') !== 'page') {
+		return 0;
+	}
+
+	$id = (int) get_option('page_on_front');
+
+	if ($id <= 0) {
+		return 0;
+	}
+
+	if (function_exists('pll_get_post') && function_exists('pll_current_language')) {
+		$lang = pll_current_language('slug');
+
+		if (is_string($lang) && $lang !== '') {
+			$translated = pll_get_post($id, $lang);
+
+			if (is_numeric($translated) && (int) $translated > 0) {
+				return (int) $translated;
+			}
+		}
+	}
+
+	return $id;
+}
+
+/**
  * Returns a field value from the header settings page.
  *
  * @param string $field_name Field name.
