@@ -62,6 +62,13 @@ function pontus_enqueue_assets(): void
 			['pontus-tokens'],
 			pontus_asset_version('/assets/css/blog-section.css')
 		);
+
+		wp_enqueue_style(
+			'pontus-newsletter-section',
+			$theme_uri . '/assets/css/newsletter-section.css',
+			['pontus-tokens'],
+			pontus_asset_version('/assets/css/newsletter-section.css')
+		);
 	}
 
 	wp_enqueue_script(
