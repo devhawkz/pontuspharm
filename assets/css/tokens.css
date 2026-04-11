@@ -1,0 +1,101 @@
+:root {
+  --c-primary: #477A5D;
+  --c-secondary: #35552B;
+  --c-accent-blue: #5596B1;
+  --c-accent-ochre: #E2B263;
+  --c-neutral-warm: #D0BFA2;
+  --c-bg: #F7F4EE;
+  --c-surface: #FFFFFF;
+  --c-text: #1F2A1F;
+  --c-topbar-bg: #6E9A82;
+  --c-cta-bg: #44738D;
+
+  --c-text-soft: color-mix(in srgb, var(--c-text) 72%, white);
+  --c-border: color-mix(in srgb, var(--c-secondary) 16%, white);
+  --c-overlay: color-mix(in srgb, var(--c-secondary) 8%, white);
+
+  --ff-body: "Montserrat", sans-serif;
+  --ff-heading: "Montserrat", sans-serif;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --fs-100: clamp(0.875rem, 0.84rem + 0.18vw, 0.95rem);
+  --fs-200: clamp(1rem, 0.96rem + 0.2vw, 1.08rem);
+  --fs-300: clamp(1.125rem, 1.02rem + 0.5vw, 1.35rem);
+  --fs-400: clamp(1.25rem, 1.08rem + 0.8vw, 1.7rem);
+  --fs-500: clamp(1.6rem, 1.2rem + 1.5vw, 2.8rem);
+
+  --lh-tight: 1.1;
+  --lh-base: 1.5;
+  --lh-relaxed: 1.7;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.9rem;
+  --radius-lg: 1.4rem;
+  --radius-pill: 999rem;
+
+  --shadow-soft: 0 0.5rem 1.5rem color-mix(in srgb, var(--c-secondary) 10%, transparent);
+  --shadow-card: 0 1rem 2.5rem color-mix(in srgb, var(--c-secondary) 10%, transparent);
+
+  --container-max: 80rem;
+  --container-pad: clamp(1rem, 2vw, 2rem);
+  --section-space: clamp(3rem, 6vw, 6rem);
+
+  --space-2xs: clamp(0.25rem, 0.2rem + 0.2vw, 0.4rem);
+  --space-xs: clamp(0.5rem, 0.4rem + 0.3vw, 0.75rem);
+  --space-sm: clamp(0.75rem, 0.6rem + 0.4vw, 1rem);
+  --space-md: clamp(1rem, 0.8rem + 0.6vw, 1.5rem);
+  --space-lg: clamp(1.5rem, 1.1rem + 1vw, 2.25rem);
+  --space-xl: clamp(2rem, 1.4rem + 1.5vw, 3rem);
+
+  --header-offset: clamp(1rem, 2vw, 1.5rem);
+  --header-min-height: clamp(4rem, 5vw, 5.5rem);
+
+  --transition-fast: 180ms ease;
+  --transition-base: 260ms ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ff-body);
+  font-size: var(--fs-200);
+  line-height: var(--lh-base);
+  color: var(--c-text);
+  background-color: var(--c-bg);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.pontus-container {
+  width: min(100% - (var(--container-pad) * 2), var(--container-max));
+  margin-inline: auto;
+}
