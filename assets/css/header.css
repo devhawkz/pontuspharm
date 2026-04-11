@@ -671,7 +671,7 @@ body.mobile-menu-open {
   inline-size: 100%;
   padding-block: 0.2rem;
   color: var(--c-text);
-  font-size: clamp(1rem, 3.8vw, 1.3rem);
+  font-size: clamp(1rem, 3.8vw, 1.3rem)
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: 0.03em;

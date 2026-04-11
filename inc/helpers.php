@@ -45,3 +45,43 @@ function pontus_get_header_setting(string $field_name, $default = '')
 
 	return $value;
 }
+
+/**
+ * Registers header strings for Polylang translations.
+ */
+function pontus_register_polylang_header_strings(): void
+{
+	if (!function_exists('pll_register_string')) {
+		return;
+	}
+
+	$topbar_text = pontus_get_header_setting('topbar_text', '');
+
+	if (is_string($topbar_text) && $topbar_text !== '') {
+		pll_register_string(
+			'pontus_topbar_text',
+			$topbar_text,
+			'pontus-zenergija',
+			true
+		);
+	}
+}
+add_action('admin_init', 'pontus_register_polylang_header_strings');
+
+/**
+ * Returns translated topbar text when Polylang is active.
+ */
+function pontus_get_translated_topbar_text(string $default = ''): string
+{
+	$text = pontus_get_header_setting('topbar_text', $default);
+
+	if (!is_string($text) || $text === '') {
+		return $default;
+	}
+
+	if (function_exists('pll__')) {
+		return pll__($text);
+	}
+
+	return $text;
+}
