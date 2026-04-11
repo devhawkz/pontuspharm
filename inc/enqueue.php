@@ -55,6 +55,13 @@ function pontus_enqueue_assets(): void
 			['pontus-tokens'],
 			pontus_asset_version('/assets/css/instagram-section.css')
 		);
+
+		wp_enqueue_style(
+			'pontus-blog-section',
+			$theme_uri . '/assets/css/blog-section.css',
+			['pontus-tokens'],
+			pontus_asset_version('/assets/css/blog-section.css')
+		);
 	}
 
 	wp_enqueue_script(
