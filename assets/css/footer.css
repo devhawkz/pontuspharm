@@ -254,8 +254,8 @@
     }
   
     .site-footer__to-top {
-      order: 5;
-    }
+      display: none;
+    } 
   }
   
   @media (max-width: 54rem) {
@@ -272,9 +272,7 @@
       align-items: flex-start;
     }
   
-    .site-footer__to-top {
-      align-self: flex-start;
-    }
+   
   
     .site-footer__bottom-inner {
       flex-direction: column;
