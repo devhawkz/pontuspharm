@@ -60,9 +60,9 @@ if ($context === 'mobile') : ?>
 		</ul>
 	</div>
 <?php else : ?>
-	<div class="site-header__lang-switcher" data-lang-switcher>
+	<div class="site-header__lang-switcher js-lang-switcher" data-lang-switcher>
 		<button
-			class="site-header__lang-toggle"
+			class="site-header__lang-toggle js-lang-toggle"
 			type="button"
 			aria-expanded="false"
 			aria-haspopup="true"
@@ -86,24 +86,26 @@ if ($context === 'mobile') : ?>
 
 		<div
 			id="site-header-lang-dropdown"
-			class="site-header__lang-dropdown"
+			class="site-header__lang-dropdown js-lang-dropdown"
 			hidden
 		>
 			<ul class="site-header__lang-list">
 				<?php foreach ($languages as $language) : ?>
 					<?php
 					$is_current = !empty($language['current_lang']);
+					if ($is_current) {
+						continue;
+					}
 					$label      = !empty($language['slug'])
 						? strtoupper((string) $language['slug'])
 						: strtoupper((string) ($language['locale'] ?? ''));
 					?>
-					<li class="site-header__lang-item<?php echo $is_current ? ' current-lang' : ''; ?>">
+					<li class="site-header__lang-item">
 						<a
 							class="site-header__lang-link"
 							href="<?php echo esc_url((string) $language['url']); ?>"
 							lang="<?php echo esc_attr((string) ($language['locale'] ?? '')); ?>"
 							hreflang="<?php echo esc_attr((string) ($language['slug'] ?? '')); ?>"
-							<?php echo $is_current ? 'aria-current="page"' : ''; ?>
 						>
 							<?php echo esc_html($label); ?>
 						</a>
