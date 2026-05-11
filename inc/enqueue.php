@@ -142,5 +142,22 @@ function pontus_enqueue_assets(): void
 		pontus_asset_version('/assets/js/header.js'),
 		true
 	);
+
+	if (is_singular('post')) {
+		wp_enqueue_style(
+			'pontus-single-post',
+			$theme_uri . '/assets/css/single-post.css',
+			['pontus-tokens'],
+			pontus_asset_version('/assets/css/single-post.css')
+		);
+
+		wp_enqueue_script(
+			'pontus-single-post',
+			$theme_uri . '/assets/js/single-post.js',
+			[],
+			pontus_asset_version('/assets/js/single-post.js'),
+			true
+		);
+	}
 }
 add_action('wp_enqueue_scripts', 'pontus_enqueue_assets');

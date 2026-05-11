@@ -445,3 +445,55 @@ function pontus_get_post_reading_time_label(?int $post_id = null): string
 		$minutes
 	);
 }
+
+/**
+ * URL of the blog posts index (page_for_posts or home).
+ */
+function pontus_get_blog_index_url(): string
+{
+	$page_id = (int) get_option('page_for_posts');
+
+	if ($page_id > 0) {
+		$url = get_permalink($page_id);
+
+		if (is_string($url) && $url !== '') {
+			return $url;
+		}
+	}
+
+	return home_url('/');
+}
+
+/**
+ * Bio text for author dropdown: excerpt or trimmed editor content, then ACF short bio.
+ */
+function pontus_get_author_profile_long_bio(int $author_id): string
+{
+	if ($author_id <= 0) {
+		return '';
+	}
+
+	if (has_excerpt($author_id)) {
+		$excerpt = get_the_excerpt($author_id);
+
+		if (is_string($excerpt) && trim(wp_strip_all_tags($excerpt)) !== '') {
+			return trim(wp_strip_all_tags($excerpt));
+		}
+	}
+
+	$content = get_post_field('post_content', $author_id);
+
+	if (is_string($content) && trim($content) !== '') {
+		return wp_trim_words(wp_strip_all_tags($content), 55, '…');
+	}
+
+	if (function_exists('get_field')) {
+		$short = get_field('author_short_bio', $author_id);
+
+		if (is_string($short) && trim($short) !== '') {
+			return trim($short);
+		}
+	}
+
+	return '';
+}
